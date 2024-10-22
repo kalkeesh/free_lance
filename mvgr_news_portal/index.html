@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVGR News Portal</title>
+    <link rel="stylesheet" href="styles1.css"> <!-- Combined CSS file -->
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <img id="logo" src="https://th.bing.com/th/id/OIP.R6trDGwcTDJCtAq0JdE2DAHaA_?w=375&h=54&c=7&r=0&o=5&dpr=1.5&pid=1.7" alt="College Logo">
+        <h1>MVGR News Portal</h1>
+        <button id="loginBtn" aria-label="Admin Login" onclick="openLoginModal()">Admin Login</button>
+    </header>
+    
+    <!-- Navigation -->
+    <nav aria-label="Main Navigation">
+        <ul>
+            <li><a href="#home" aria-label="Home">Home</a></li>
+            <li><a href="#about" aria-label="About Us">About Us</a></li>
+            <li><a href="#latest-news" aria-label="Latest News">Latest News</a></li>
+            <li><a href="#upcoming-events" aria-label="Events">Events</a></li>
+            <li><a href="#gallery" aria-label="Gallery">Gallery</a></li>
+            <li><a href="#contact" aria-label="Contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Banner Section -->
+        <section class="banner" id="home">
+            <h1>WELCOME TO MVGR(A)</h1>
+            <p>Your Gateway to Excellence in Education.</p>
+        </section>
+
+        <!-- Latest News Section -->
+        <section class="latest-news" id="latest-news">
+            <h2>LATEST NEWS</h2>
+            <div class="news-container">
+                <article>
+                    <h3>News Title 1</h3>
+                    <p>Brief description of the latest news.</p>
+                    <a href="#" aria-label="Read more about News Title 1">Read More</a>
+                </article>
+                <article>
+                    <h3>News Title 2</h3>
+                    <p>Brief description of the latest news.</p>
+                    <a href="#" aria-label="Read more about News Title 2">Read More</a>
+                </article>
+                <!-- Add more articles as needed -->
+            </div>
+        </section>
+
+        <!-- Upcoming Events Section -->
+        <section class="upcoming-events" id="upcoming-events">
+            <h2>UPCOMING EVENTS</h2>
+            <ul>
+                <li>
+                    <strong>Event 1:</strong> Date and brief description.
+                </li>
+                <li>
+                    <strong>Event 2:</strong> Date and brief description.
+                </li>
+                <!-- Add more events as needed -->
+            </ul>
+        </section>
+
+        <!-- Image Gallery Section -->
+        <!-- <section class="image-gallery" id="gallery">
+            <h2>IMAGE GALLERY</h2>
+            <div id="button-container" aria-label="Image category filter">
+                <button type="button" onclick="filterImages('sports')" aria-label="Filter Sports Images">Sports</button>
+                <button type="button" onclick="filterImages('cultural')" aria-label="Filter Cultural Images">Cultural</button>
+                <button type="button" onclick="filterImages('academic')" aria-label="Filter Academic Events Images">Academic Events</button>
+                <button type="button" onclick="filterImages('clubs')" aria-label="Filter Clubs Images">Clubs</button>
+                <button type="button" onclick="filterImages('announcements')" aria-label="Filter Announcement Events Images">Announcements</button>
+                <button type="button" onclick="filterImages('others')" aria-label="Filter Other Images">Others</button>
+                <button type="button" onclick="showAllImages()" aria-label="Show All Images">Show All</button>
+            </div>
+            <div id="image-container" aria-live="polite">
+            </div>
+        </section> -->
+<!-- Image Gallery Section -->
+<section class="image-gallery" id="gallery">
+    <h2>IMAGE GALLERY</h2>
+    <div id="button-container" aria-label="Image category filter">
+        <!-- Buttons for filtering images by category -->
+        <button type="button" onclick="filterImages('sports')" aria-label="Filter Sports Images">Sports</button>
+        <button type="button" onclick="filterImages('cultural')" aria-label="Filter Cultural Images">Cultural</button>
+        <button type="button" onclick="filterImages('academic')" aria-label="Filter Academic Events Images">Academic Events</button>
+        <button type="button" onclick="filterImages('clubs')" aria-label="Filter Clubs Images">Clubs</button>
+        <button type="button" onclick="filterImages('announcements')" aria-label="Filter Announcement Events Images">Announcements</button>
+        <button type="button" onclick="filterImages('others')" aria-label="Filter Other Images">Others</button>
+        <button type="button" onclick="showAllImages()" aria-label="Show All Images">Show All</button>
+    </div>
+    <div id="image-container" aria-live="polite">
+        <!-- Images with descriptions will be dynamically loaded here -->
+    </div>
+</section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <p>&copy; 2024 College Name. All rights reserved.</p>
+        <p>
+            Follow us:
+            <a href="#" aria-label="Facebook">Facebook</a> |
+            <a href="#" aria-label="Twitter">Twitter</a> |
+            <a href="#" aria-label="Instagram">Instagram</a>
+        </p>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModals()" aria-label="Close Login Modal">&times;</button>
+            <h2>ADMIN LOGIN</h2>
+            <form id="loginForm" onsubmit="login(event)">
+                <label for="adminPassword">PASSWORD:</label>
+                <input type="password" id="adminPassword" placeholder="Enter admin password" required aria-label="Admin Password">
+                <button type="submit">LOGIN</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div id="adminPanel" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModals()" aria-label="Close Admin Panel">&times;</button>
+            <h2>ADMIN PANEL</h2>
+            <form id="uploadForm" onsubmit="uploadImage(event)">
+                <label for="imageUpload">UPLOAD IMAGE:</label>
+                <input type="file" id="imageUpload" accept="image/*" required aria-label="Upload Image">
+                
+                <label for="imageDescription">IMAGE DESCRIPTION:</label>
+                <input type="text" id="imageDescription" placeholder="Enter image description" required aria-label="Image Description">
+
+                <label for="imageCategory">CATEGORY:</label>
+                <select id="imageCategory" required aria-label="Image Category">
+                    <option value="sports">Sports</option>
+                    <option value="cultural">Cultural</option>
+                    <option value="academic">Academic Events</option>
+                    <option value="clubs">Clubs</option>
+                    <option value="announcements">Announcements</option>
+                    <option value="others">Others</option>
+                </select>
+                
+                <button type="submit">UPLOAD IMAGE</button>
+            </form>
+            <div class="admin-buttons">
+                <button onclick="showChangePasswordModal()" aria-label="Change Password">CHANGE PASSWORD</button>
+                <button onclick="logout()" aria-label="Logout">LOGOUT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div id="changePasswordModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModals()" aria-label="Close Change Password Modal">&times;</button>
+            <h2>CHANGE ADMIN PASSWORD</h2>
+            <form id="changePasswordForm" onsubmit="changePassword(event)">
+                <label for="currentPassword">CURRENT PASSWORD:</label>
+                <input type="password" id="currentPassword" placeholder="Enter current password" required aria-label="Current Password">
+
+                <label for="newPassword">NEW PASSWORD:</label>
+                <input type="password" id="newPassword" placeholder="Enter new password" required aria-label="New Password">
+
+                <label for="confirmNewPassword">CONFIRM NEW PASSWORD:</label>
+                <input type="password" id="confirmNewPassword" placeholder="Confirm new password" required aria-label="Confirm New Password">
+
+                <button type="submit">CHANGE PASSWORD</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script1.js"></script> <!-- Combined JavaScript file -->
+</body>
+</html>

@@ -1,0 +1,709 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hospital Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary-color: #2c6ba0;
+        --secondary-color: #e9f2fa;
+        --accent-color: #28a745;
+      }
+      
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+
+      .navbar {
+        background-color: var(--primary-color);
+      }
+      
+      .section-light {
+        background-color: var(--secondary-color);
+        padding: 60px 0;
+      }
+      
+      .section-white {
+        background-color: #ffffff;
+        padding: 60px 0;
+      }
+      
+      .section-dark {
+        background-color: #f8f9fa;
+        padding: 60px 0;
+      }
+      
+      .form-section {
+        background: linear-gradient(rgba(44, 107, 160, 0.1), rgba(44, 107, 160, 0.1));
+        padding: 40px 0;
+      }
+      
+      .appointment-form {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-card {
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        height: 100%;
+        transition: transform 0.3s;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .contact-info {
+        padding: 20px;
+        border-radius: 8px;
+        background: white;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      }
+
+      .patient-table {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        overflow: hidden;
+      }
+
+      .patient-table th {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 15px;
+      }
+
+      .stats-counter {
+        text-align: center;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      }
+
+      .stats-counter i {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Keep existing navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="#"><i class="fas fa-hospital-alt me-2"></i>Hospital Management</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#patients">Patients</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#appointment">New Appointment</a>
+            </li>
+          </ul>
+          <div class="d-flex align-items-center">
+            {% if username %}
+              <span class="text-light me-3">Welcome, Dr. {{ username }}</span>
+              <a href="{% url 'logout' %}" class="btn btn-outline-light">Logout</a>
+            {% else %}
+              <a href="{% url 'login' %}" class="btn btn-outline-light me-2">Login</a>
+              <a href="{% url 'register' %}" class="btn btn-light">Register</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Keep existing home section -->
+    <!-- Home Section -->
+    <section id="home" class="section-light">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <h1 class="display-4 mb-4">Hospital Management System</h1>
+            <p class="lead">Efficient patient care through digital management</p>
+          </div>
+          <div class="col-md-6">
+            <img src="{% get_media_prefix %}hospital.png" alt="Hospital" class="img-fluid rounded shadow" />
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- About Section -->
+    <section id="about" class="section-white">
+      <div class="container">
+        <h2 class="text-center mb-5">About Our Hospital</h2>
+        <div class="row">
+          <div class="col-lg-6 mb-4">
+            <p class="lead">Welcome to our state-of-the-art healthcare facility, where we combine advanced medical technology with compassionate care to provide the best possible treatment for our patients.</p>
+            <p>Established in 1995, our hospital has grown to become a leading healthcare provider in the region. We offer comprehensive medical services across multiple specialties, supported by cutting-edge technology and a team of highly qualified healthcare professionals.</p>
+            <p>Our commitment to excellence in patient care has earned us numerous accreditations and awards, making us a trusted name in healthcare services.</p>
+          </div>
+          <div class="col-lg-6">
+            <div class="row">
+              <div class="col-6 mb-4">
+                <div class="stats-counter">
+                  <i class="fas fa-user-md"></i>
+                  <h3>150+</h3>
+                  <p>Expert Doctors</p>
+                </div>
+              </div>
+              <div class="col-6 mb-4">
+                <div class="stats-counter">
+                  <i class="fas fa-procedures"></i>
+                  <h3>200+</h3>
+                  <p>Hospital Beds</p>
+                </div>
+              </div>
+              <div class="col-6 mb-4">
+                <div class="stats-counter">
+                  <i class="fas fa-smile"></i>
+                  <h3>50k+</h3>
+                  <p>Happy Patients</p>
+                </div>
+              </div>
+              <div class="col-6 mb-4">
+                <div class="stats-counter">
+                  <i class="fas fa-certificate"></i>
+                  <h3>25+</h3>
+                  <p>Years Experience</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Patient Details Section -->
+    <section id="patients" class="section-dark">
+      <div class="container">
+        <h2 class="text-center mb-5">Patient Details of  Dr.{{username}}</h2>
+        <div class="patient-table table-responsive">
+          <table class="table table-hover mb-0">
+            <thead>
+              <tr>
+                <th>Patient Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Contact</th>
+                <th>Medical Issue</th>
+                <th>Appointment Date</th>
+                <th>Time</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for patient in patient_Details %}
+                {% if patient.doctor_name == username %}
+                  <tr>
+                    <td>{{ patient.name }}</td>
+                    <td>{{ patient.age }}</td>
+                    <td>{{ patient.gender }}</td>
+                    <td>{{ patient.mbl }}</td>
+                    <td>{{ patient.medical_issue }}</td>
+                    <td>{{ patient.appointment_date }}</td>
+                    <td>{{ patient.appt_time }}</td>
+                    <td>
+                      <form action="{% url 'delete_patient' patient.id %}" method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section id="why-us" class="section-white">
+      <div class="container">
+        <h2 class="text-center mb-5">Why Choose Us</h2>
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="feature-card">
+              <i class="fas fa-user-md mb-3 text-primary fa-2x"></i>
+              <h4>Expert Doctors</h4>
+              <p>Our team consists of highly qualified and experienced medical professionals dedicated to providing the best care.</p>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="feature-card">
+              <i class="fas fa-hospital-user mb-3 text-primary fa-2x"></i>
+              <h4>Patient-Centered Care</h4>
+              <p>We prioritize patient comfort and satisfaction, ensuring personalized attention and care for everyone.</p>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="feature-card">
+              <i class="fas fa-microscope mb-3 text-primary fa-2x"></i>
+              <h4>Modern Technology</h4>
+              <p>Our hospital is equipped with state-of-the-art medical technology for accurate diagnosis and treatment.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Keep existing appointment form section -->
+    <!-- Appointment Form Section -->
+    <section id="appointment" class="form-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="appointment-form">
+              <h2 class="text-center mb-4">New Patient Appointment</h2>
+              <form action="{% url 'patient_data' %}" method="POST">
+                {% csrf_token %}
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Patient Name" required />
+                      <label for="name">Patient Name</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="number" class="form-control" id="age" name="age" placeholder="Age" required />
+                      <label for="age">Age</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="medical_issue" name="medical_issue" placeholder="Medical Issue" required />
+                      <label for="medical_issue">Medical Issue</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="doctor_name" name="doctor_name" placeholder="Doctor Name" required />
+                      <label for="doctor_name">Doctor Name</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="mbl" name="mbl" placeholder="Mobile Number" required />
+                      <label for="mbl">Mobile Number</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="date" class="form-control" id="appointment_date" name="appointment_date" required />
+                      <label for="appointment_date">Appointment Date</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="time" class="form-control" id="appt_time" name="appt_time" required />
+                      <label for="appt_time">Appointment Time</label>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="mb-3">
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="male" value="male" required />
+                        <label class="form-check-label" for="male">Male</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="female" required />
+                        <label class="form-check-label" for="female">Female</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary btn-lg">Schedule Appointment</button>
+                </div>
+              </form>
+              {% for message in messages %}
+                <div class="alert alert-info mt-3" role="alert">{{ message }}</div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-light">
+      <div class="container">
+        <h2 class="text-center mb-5">Contact Us</h2>
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="contact-info">
+              <h4>Get in Touch</h4>
+              <p><i class="fas fa-map-marker-alt me-2 text-primary"></i>123 Hospital Street, Medical District, City</p>
+              <p><i class="fas fa-phone me-2 text-primary"></i>+1 (555) 123-4567</p>
+              <p><i class="fas fa-envelope me-2 text-primary"></i>info@hospital.com</p>
+              <p><i class="fas fa-clock me-2 text-primary"></i>24/7 Emergency Services</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="contact-info">
+              <h4>Emergency Contact</h4>
+              <p class="mb-2">Ambulance: <strong>911</strong></p>
+              <p class="mb-2">Emergency Room: <strong>+1 (555) 911-1234</strong></p>
+              <p>For medical emergencies, please call our 24/7 emergency hotline or visit our emergency department immediately,  24/7 emergency hotline or visit our emergency department.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h5>Hospital Management System</h5>
+            <p>Providing efficient healthcare management solutions.</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <p>© 2024 Hospital Management. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Keep existing footer -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
+
+
+
+
+{% comment %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hospital Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+      :root {
+        --primary-color: #2c6ba0;
+        --secondary-color: #e9f2fa;
+        --accent-color: #28a745;
+      }
+      
+      .navbar {
+        background-color: var(--primary-color);
+      }
+      
+      .section-light {
+        background-color: var(--secondary-color);
+        padding: 60px 0;
+      }
+      
+      .section-white {
+        background-color: #ffffff;
+        padding: 60px 0;
+      }
+      
+      .section-dark {
+        background-color: #f8f9fa;
+        padding: 60px 0;
+      }
+      
+      .patient-card {
+        transition: transform 0.3s;
+        margin-bottom: 1rem;
+      }
+      
+      .patient-card:hover {
+        transform: translateY(-5px);
+      }
+      
+      .form-section {
+        background: linear-gradient(rgba(44, 107, 160, 0.1), rgba(44, 107, 160, 0.1));
+        padding: 40px 0;
+      }
+      
+      .appointment-form {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="#"><i class="fas fa-hospital-alt me-2"></i>Hospital Management</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#patients">Patients</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#appointment">New Appointment</a>
+            </li>
+          </ul>
+          <div class="d-flex align-items-center">
+            {% if username %}
+              <span class="text-light me-3">Welcome, Dr. {{ username }}</span>
+              <a href="{% url 'logout' %}" class="btn btn-outline-light">Logout</a>
+            {% else %}
+              <a href="{% url 'login' %}" class="btn btn-outline-light me-2">Login</a>
+              <a href="{% url 'register' %}" class="btn btn-light">Register</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="section-light">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <h1 class="display-4 mb-4">Hospital Management System</h1>
+            <p class="lead">Efficient patient care through digital management</p>
+          </div>
+          <div class="col-md-6">
+            <img src="{% get_media_prefix %}hospital.png" alt="Hospital" class="img-fluid rounded shadow" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Patients Section -->
+    <section id="patients" class="section-white">
+      <div class="container">
+        <h2 class="text-center mb-5">Patient Details</h2>
+        <div class="row">
+          {% for patient in patient_Details %}
+            {% if patient.doctor_name == username %}
+              <div class="col-md-6">
+                <div class="card patient-card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                      <div>
+                        <h5 class="card-title">{{ patient.name }} ({{ patient.age }} years)</h5>
+                        <p class="card-text mb-1">
+                          <i class="fas fa-phone me-2 text-primary"></i>{{ patient.mbl }}
+                        </p>
+                        <p class="card-text mb-1">
+                          <i class="fas fa-venus-mars me-2 text-primary"></i>{{ patient.gender }}
+                        </p>
+                        <p class="card-text mb-1">
+                          <i class="fas fa-notes-medical me-2 text-primary"></i>{{ patient.medical_issue }}
+                        </p>
+                        <p class="card-text mb-1">
+                          <i class="fas fa-calendar me-2 text-primary"></i>{{ patient.appointment_date }}
+                        </p>
+                        <p class="card-text">
+                          <i class="fas fa-clock me-2 text-primary"></i>{{ patient.appt_time }}
+                        </p>
+                      </div>
+                      <form action="{% url 'delete_patient' patient.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- Appointment Form Section -->
+    <section id="appointment" class="form-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="appointment-form">
+              <h2 class="text-center mb-4">New Patient Appointment</h2>
+              <form action="{% url 'patient_data' %}" method="POST">
+                {% csrf_token %}
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Patient Name" required />
+                      <label for="name">Patient Name</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="number" class="form-control" id="age" name="age" placeholder="Age" required />
+                      <label for="age">Age</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="medical_issue" name="medical_issue" placeholder="Medical Issue" required />
+                      <label for="medical_issue">Medical Issue</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="doctor_name" name="doctor_name" placeholder="Doctor Name" required />
+                      <label for="doctor_name">Doctor Name</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="mbl" name="mbl" placeholder="Mobile Number" required />
+                      <label for="mbl">Mobile Number</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="date" class="form-control" id="appointment_date" name="appointment_date" required />
+                      <label for="appointment_date">Appointment Date</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="time" class="form-control" id="appt_time" name="appt_time" required />
+                      <label for="appt_time">Appointment Time</label>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="mb-3">
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="male" value="male" required />
+                        <label class="form-check-label" for="male">Male</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="female" required />
+                        <label class="form-check-label" for="female">Female</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary btn-lg">Schedule Appointment</button>
+                </div>
+              </form>
+              {% for message in messages %}
+                <div class="alert alert-info mt-3" role="alert">{{ message }}</div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h5>Hospital Management System</h5>
+            <p>Providing efficient healthcare management solutions.</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <p>© 2024 Hospital Management. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html> {% endcomment %}
+
+
+
+
+{% comment %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 >hospital management</h1>
+    <h2>{{username}}</h2>
+    <a href="{% url 'login' %}" class="btn btn-outline-primary ms-2">Login</a>
+    <a href="{% url 'register' %}" class="btn btn-primary ms-2">Register</a>
+    <a href="{% url 'logout' %}" class="btn btn-primary ms-2">logout</a>
+
+    <div>
+        <h1>Patient Details</h1>
+        {% for patient in patient_Details %}
+            {% if patient.doctor_name == username %}
+                <p>{{patient.name}}, {{patient.age}}, {{patient.mbl}}, {{patient.gender}}, {{patient.medical_issue}}, {{patient.appointment_date}}, {{patient.appt_time}}</p>
+                <form action="{% url 'delete_patient' patient.id %}" method="POST" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+    <br>            
+    <br>        
+    <br>        
+    <section>
+        <form action= {% url 'patient_data' %} method ="POST">
+            {% csrf_token %}
+            <label for="name">patient name</label>
+            <input type="text" id="name" name="name" placeholder="name of the patient" required><br><br>
+
+            <label for="age">patient age:</label>
+            <input type="number" id="age" name="age" placeholder="patient age" required><br><br>
+        
+            <label for="medical_issue">Medical issue:</label>
+            <input type="text" id="medical_issue" name="medical_issue" placeholder="medical issue" required><br><br>
+        
+            <label for="doctor_name">doc name:</label>
+            <input type="text" id="doctor_name" name="doctor_name" placeholder="consulting doctor" required><br><br>
+        
+            <label for="mbl">mobile number:</label>
+            <input type="text" id="mbl" name="mbl" placeholder="mbl" required><br><br>
+            <label for="appointment_date">appointment date:</label>
+            <input type="text" id="appointment_date" name="appointment_date" placeholder="appointment date" required><br><br>
+            <label for="appt_time">appt time:</label>
+            <input type="text" id="appt_time" name="appt_time" placeholder="appt time" required><br><br>
+        
+            <label for="male">
+                <input type="radio" id="male" name="gender" value="male"> MALE
+            </label><br>
+            <label for="female">
+                <input type="radio" id="female" name="gender" value="female">FEMALE
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+        {% for message in messages %}
+        <h3>{{message}}</h3>
+        {% endfor %}
+    </section>
+</body>
+</html>
+ {% endcomment %}

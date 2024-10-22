@@ -1,0 +1,675 @@
+.image-wrapper {
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+}
+
+.gallery-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.image-wrapper p {
+    font-size: 14px;
+    color: #555;
+}
+
+
+
+/* CSS Variables for Consistent Theming */
+:root {
+    --primary-color: #004080;
+    --secondary-color: #0066cc;
+    --accent-color: #005bb5;
+    --background-color: #f4f4f4;
+    --light-color: #ffffff;
+    --dark-color: #333333;
+    --border-color: #cccccc;
+    --modal-overlay-bg: rgba(0, 0, 0, 0.5);
+    --font-family: 'Times New Roman', Times, serif;
+    --transition-speed: 0.3s;
+}
+
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    text-transform: uppercase;
+    background-color: var(--background-color);
+    color: var(--dark-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Styling */
+header {
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header img#logo {
+    height: 54px;
+    width: auto;
+}
+
+header h1 {
+    margin: 0 20px;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+}
+
+header button#loginBtn {
+    background-color: var(--secondary-color);
+    color: var(--light-color);
+    border: none;
+    padding: 10px 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header button#loginBtn:hover,
+header button#loginBtn:focus {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    outline: none;
+}
+
+/* Navigation Styling */
+nav {
+    background-color: var(--light-color);
+    padding: 15px 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+nav ul li {
+    position: relative;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--dark-color);
+    padding: 8px 12px;
+    font-size: 1rem;
+    transition: color var(--transition-speed), background-color var(--transition-speed);
+    border-radius: 5px;
+}
+
+nav ul li a:hover,
+nav ul li a:focus {
+    background-color: var(--secondary-color);
+    color: var(--light-color);
+    outline: none;
+}
+
+/* Banner Section Styling */
+.banner {
+    background-image: url('https://via.placeholder.com/1200x400'); /* Replace with your banner image */
+    background-size: cover;
+    background-position: center;
+    color: var(--light-color);
+    text-align: center;
+    padding: 100px 20px;
+    position: relative;
+}
+
+.banner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Overlay */
+}
+
+.banner h1,
+.banner p {
+    position: relative;
+    z-index: 1;
+}
+
+.banner h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.banner p {
+    font-size: 1.5rem;
+}
+
+/* Latest News Section Styling */
+.latest-news {
+    padding: 40px;
+    background-color: var(--light-color);
+}
+
+.latest-news h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    letter-spacing: 1.5px;
+}
+
+.news-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.latest-news article {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.latest-news article:hover,
+.latest-news article:focus-within {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.latest-news article h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.latest-news article p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.latest-news article a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-weight: bold;
+    transition: color var(--transition-speed);
+}
+
+.latest-news article a:hover,
+.latest-news article a:focus {
+    color: var(--accent-color);
+    outline: none;
+}
+
+/* Upcoming Events Section Styling */
+.upcoming-events {
+    padding: 40px;
+}
+
+.upcoming-events h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    letter-spacing: 1.5px;
+}
+
+.upcoming-events ul {
+    list-style: none;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.upcoming-events li {
+    background-color: var(--light-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+}
+
+.upcoming-events li:hover,
+.upcoming-events li:focus-within {
+    background-color: var(--background-color);
+    transform: translateX(5px);
+    outline: none;
+}
+
+/* Image Gallery Section Styling */
+.image-gallery {
+    padding: 40px;
+    background-color: var(--light-color);
+}
+
+.image-gallery h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    letter-spacing: 1.5px;
+}
+
+#button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+#button-container button {
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    border: 2px solid var(--dark-color);
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: background-color var(--transition-speed), color var(--transition-speed), transform var(--transition-speed);
+    min-width: 150px;
+    text-align: center;
+}
+
+#button-container button:hover,
+#button-container button:focus {
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    transform: scale(1.05);
+    outline: none;
+}
+
+#image-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+#image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    cursor: pointer;
+}
+
+
+
+/* Footer Styling */
+footer {
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    text-align: center;
+    padding: 20px 40px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+footer p {
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+footer a {
+    text-decoration: none;
+    color: var(--light-color);
+    transition: color var(--transition-speed);
+}
+
+footer a:hover,
+footer a:focus {
+    color: var(--accent-color);
+    outline: none;
+}
+
+/* Modal Styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1001; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: var(--modal-overlay-bg); /* Black w/ opacity */
+    animation: fadeIn var(--transition-speed) ease-in-out;
+}
+
+.modal-content {
+    background-color: var(--light-color);
+    margin: 5% auto; /* 5% from the top and centered */
+    padding: 30px 40px;
+    border: 1px solid var(--border-color);
+    width: 90%; /* Could be more or less, depending on screen size */
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: slideDown var(--transition-speed) ease-in-out;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.modal-content input,
+.modal-content select {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    text-transform: none; /* Override uppercase for input fields */
+    font-family: inherit; /* Maintain Times New Roman in inputs */
+    font-size: 1rem;
+    transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.modal-content input:focus,
+.modal-content select:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 5px var(--secondary-color);
+    outline: none;
+}
+
+.modal-content button {
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+    margin-top: 10px;
+}
+
+.modal-content button:hover,
+.modal-content button:focus {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    outline: none;
+}
+
+.modal-content .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--dark-color);
+    transition: color var(--transition-speed);
+}
+
+.modal-content .close-btn:hover,
+.modal-content .close-btn:focus {
+    color: var(--secondary-color);
+    outline: none;
+}
+
+/* Additional Buttons in Admin Panel */
+.admin-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.admin-buttons button {
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px;
+    font-size: 0.9rem;
+    background-color: var(--secondary-color);
+    color: var(--light-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+}
+
+.admin-buttons button:hover,
+.admin-buttons button:focus {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    outline: none;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    header, nav, main, footer {
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+    #button-container button {
+        min-width: 120px;
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .modal-content {
+        padding: 20px 25px;
+    }
+
+    .modal-content h2 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #button-container button {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    #image-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .banner {
+        padding: 80px 20px;
+    }
+
+    .banner h1 {
+        font-size: 2.5rem;
+    }
+
+    .banner p {
+        font-size: 1.2rem;
+    }
+
+    .latest-news article {
+        max-width: 100%;
+    }
+
+    .upcoming-events ul {
+        padding: 0 20px;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    nav ul li a {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+    }
+
+    #button-container button {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+    }
+
+    .banner h1 {
+        font-size: 1.5rem;
+    }
+
+    .banner p {
+        font-size: 1rem;
+    }
+
+    .latest-news h2,
+    .upcoming-events h2,
+    .image-gallery h2 {
+        font-size: 1.5rem;
+    }
+
+    .modal-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .modal-content input,
+    .modal-content select,
+    .modal-content button {
+        font-size: 0.9rem;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Scrollbar Styling (Webkit Browsers) */
+body::-webkit-scrollbar {
+    width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--background-color);
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: var(--secondary-color);
+    border-radius: 4px;
+    border: 2px solid var(--background-color);
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-color);
+}
+
+/* --------------------------------------------------------------------------------*/
+/* Style for image gallery */
+.image-gallery {
+    text-align: center;
+}
+
+#button-container {
+    margin-bottom: 20px;
+}
+
+#image-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 images per row */
+    gap: 15px;
+    justify-items: center;  /* Center images within grid cells */
+}
+
+.gallery-image {
+    width: 100%; /* Make images responsive to fit their grid cells */
+    max-width: 200px; /* Set a max width for larger screens */
+    height: auto;
+    object-fit: cover;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+/* .gallery-image:hover {
+    transform: scale(1.1);
+} */
+
+/* Make the grid responsive */
+@media (max-width: 1024px) {
+    #image-container {
+        grid-template-columns: repeat(3, 1fr); /* 3 images per row on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    #image-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 images per row on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    #image-container {
+        grid-template-columns: 1fr; /* 1 image per row on very small screens */
+    }
+}
